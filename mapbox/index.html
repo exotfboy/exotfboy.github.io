@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'/>
+	<title></title>
+	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+	<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.37.0/mapbox-gl.css' rel='stylesheet'/>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		#map {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+
+<div id='map'></div>
+<script>
+	//"tiles": ["https://tile.mapzen.com/mapzen/vector/v1/all/{z}/{x}/{y}.mvt?api_key=vector-tiles-LM25tq4"]
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZGh5ZmIiLCJhIjoiY2l4cXh4cm14MDc4ZjMybm5xbmJwN3lhNiJ9.AcOS7pJhVySvvddMSglvGw';
+	var simple = {
+		"version": 8,
+		"sources": {
+			"osm": {
+				"type": "vector",
+				"tiles": ["./data/t.mvt"]
+			}
+		},
+		"sprite": "mapbox://sprites/mapbox/streets-v9",
+		"glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+		"layers": [
+			{
+				"id": "background",
+				"type": "background",
+				"paint": {
+					"background-color": "#ddd"
+				}
+			}, {
+				"id": "pois",
+				"type": "symbol",
+				"source": "osm",
+				"source-layer": "pois",
+				"layout": {
+					"text-line-height": 1.1,
+					"text-size": 13,
+					"icon-image": "airfield-11",
+					"text-max-angle": 38,
+					"symbol-spacing": 250,
+					"text-font": [
+						"DIN Offc Pro Medium",
+						"Arial Unicode MS Regular"
+					],
+					"text-padding": 2,
+					"text-rotation-alignment": "viewport",
+					"text-anchor": "top",
+					"text-offset":[0,0.65],
+					"text-field": "{name}",
+					"text-max-width": 8
+				},
+				"paint": {
+					"text-color": "black",
+					"text-halo-color": "white",
+					"text-halo-width": 0.5,
+					"text-halo-blur": 0.5
+				}
+			}
+		]
+	};
+
+	var map = new mapboxgl.Map({
+		container: 'map',
+		style: simple,
+		minZoom: 0,
+		zoom: 1,
+		center: [-14, 35],
+		renderWorldCopies: false
+
+	});
+
+	map.addControl(new mapboxgl.NavigationControl());
+</script>
+
+</body>
+</html>
